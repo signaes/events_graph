@@ -1,0 +1,81 @@
+files:
+  include:
+    - 'src/*.scss'
+    - 'src/**/*.scss'
+  ignore:
+    - 'node_modules/'
+    - 'src/assets/styles/base/_reset.scss'
+rules:
+  # Extends
+  extends-before-mixins: 2
+  extends-before-declarations: 2
+  placeholder-in-extend: 0
+
+  # Mixins
+  mixins-before-declarations:
+    - 2
+    -
+      exclude:
+        - breakpoint
+        - mq
+
+  # Line Spacing
+  one-declaration-per-line: 2
+  empty-line-between-blocks: 1
+  single-line-per-selector: 1
+
+  # Disallows
+  no-duplicate-properties: 2
+  no-empty-rulesets: 1
+  no-ids: 2
+  no-important: 2
+  no-invalid-hex: 1
+  no-mergeable-selectors: 2
+  no-trailing-whitespace: 1
+  no-trailing-zero: 1
+  no-transition-all: 0
+  no-vendor-prefixes: 0
+  no-qualifying-elements: 0
+
+  # Nesting
+  declarations-before-nesting: 1
+  force-element-nesting: 0
+  force-pseudo-nesting: 0
+
+  # Style Guide
+  attribute-quotes: 1
+  property-sort-order: 0
+
+  indentation:
+    - 2
+    -
+      size: 2
+  class-name-format:
+    - 1
+    -
+      allow-leading-underscore: false
+      convention: hyphenatedbem
+  leading-zero:
+    - 1
+    - include: false
+
+  nesting-depth:
+    - 1
+    - max-depth: 3
+  no-misspelled-properties:
+    - 1
+    - extra-properties: []
+
+  # Inner Spacing
+  space-after-comma: 1
+  space-before-colon: 1
+  space-after-colon: 1
+  space-before-brace: 1
+  space-before-bang: 1
+  space-after-bang: 1
+  space-between-parens: 1
+  space-around-operator: 1
+
+  # Final Items
+  trailing-semicolon: 1
+  final-newline: 0
