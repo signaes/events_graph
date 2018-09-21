@@ -1,0 +1,32 @@
+$white-smoke: #F9F9F9;
+
+.ticket-card {
+  background-color: $white-smoke;
+  border-radius: 5px;
+
+  &[data-available="false"] {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  &__header,
+  &__footer {
+    padding: 1em;
+  }
+
+  &__header {
+    display: flex;
+
+    &__content {
+      flex-grow: 1;
+    }
+  }
+
+  &__title {
+    font-size: 1em;
+  }
+
+  &__price {
+    font-size: 2em;
+  }
+}
