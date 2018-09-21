@@ -24,22 +24,30 @@ const TicketCard = ({
       </div>
       <div className="ticket-card__header__control">
         { batch && batch.purchaseable_quantities
-            ? (<select
+          ? (<div>
+              <label htmlFor="quantity">Quantidade</label>
+              <select
+                id="quantity"
                 onChange={e => selectBatch({
                   ticketId: id, batch, quantity: e.target.value
                 })}>
                   { quantities(batch.purchaseable_quantities)
                       .map(n => <option value={`${n}`} key={`${id}-q-${n}`}>{n}</option>) }
-              </select>)
+              </select>
+            </div>)
             : null }
         { batch && batch.payment_methods
-            ? (<select
+          ? (<div>
+              <label htmlFor="payment-method">Forma de pagamento</label>
+              <select
+                id="payment-method"
                 onChange={e => selectPaymentMethod({
                   ticketId: id, batch, paymentMethod: e.target.value
                 })}>
                   { quantities(batch.payment_methods)
                       .map(n => <option value={`${n.payment_type}`} key={`${id}-p-${n.payment_type}`}>{n.payment_type}</option>) }
-              </select>)
+              </select>
+            </div>)
             : null }
       </div>
     </header>
