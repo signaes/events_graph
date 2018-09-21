@@ -5,6 +5,11 @@ import actions from '../../redux/actions';
 
 const parsePrice = n => `R$ ${(n/100)}`;
 const quantities = a => ['-'].concat(a);
+const paymentMethodName = m => m === 'BANK_SLIP'
+  ? 'Boleto Bancário'
+  : m === 'CREDIT'
+    ? 'Cartão de Crédito'
+    : null;
 
 const TicketCard = ({
   batch,
@@ -32,7 +37,9 @@ const TicketCard = ({
                   ticketId: id, batch, quantity: e.target.value
                 })}>
                   { quantities(batch.purchaseable_quantities)
-                      .map(n => <option value={`${n}`} key={`${id}-q-${n}`}>{n}</option>) }
+                    .map(n => (
+                      <option value={`${n}`} key={`${id}-q-${n}`}>{n}</option>
+                    )) }
               </select>
             </div>)
             : null }
@@ -44,8 +51,14 @@ const TicketCard = ({
                 onChange={e => selectPaymentMethod({
                   ticketId: id, batch, paymentMethod: e.target.value
                 })}>
-                  { quantities(batch.payment_methods)
-                      .map(n => <option value={`${n.payment_type}`} key={`${id}-p-${n.payment_type}`}>{n.payment_type}</option>) }
+                  { batch.payment_methods
+                    .map(n => (
+                      <option
+                        value={`${n.payment_type}`}
+                        key={`${id}-p-${n.payment_type}`}>
+                        {paymentMethodName(n.payment_type)}
+                      </option>
+                    )) }
               </select>
             </div>)
             : null }
