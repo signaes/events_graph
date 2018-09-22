@@ -11,6 +11,7 @@ const initialState = {
   nodes: [],
   selected: {},
   paymentMethods: {},
+  total: {}
 };
 
 const filterAvailableBatches = nodes => nodes
@@ -40,7 +41,8 @@ const addTicketOffers = (state, action) => {
       ...node,
       batches: node.batches.map(b => ({
         ...b,
-        chosenPaymentMethod: b.payment_methods[0]
+        chosenPaymentMethod: b.payment_methods[0],
+        priceByQuantity: b.price
       }))
     }));
   const paymentMethods = nodes
@@ -61,11 +63,21 @@ const addTicketOffers = (state, action) => {
 const selectBatch = (state, { payload }) => {
   let newState = { ...state };
   const { ticketId, batch, quantity } = payload;
+  const nodes = state.nodes
+    .map(node => ({
+      ...node,
+      batches: node.batches.map(b => ({
+        ...b,
+        priceByQuantity: b.price * parseInt(quantity, 10)
+      }))
+    }));
 
   newState.selected = {
     ...state.selected,
     [ticketId]: { batch, quantity }
   };
+
+  newState.nodes = nodes;
 
   return newState;
 };

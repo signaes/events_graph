@@ -27,7 +27,7 @@ const TicketCard = ({
       <div className="ticket-card__header__content">
         <h2 className="ticket-card__title">{ name } - Lote { batch.number }</h2>
         <h3 className="ticket-card__price">
-          { parsePrice(batch.price) } { findTaxes(batch) }
+          { parsePrice(batch.priceByQuantity) } { findTaxes(batch) }
         </h3>
       </div>
       <div className="ticket-card__header__control">
