@@ -16,8 +16,7 @@ const initialState = {
 
 const findSelectedQuantityBatches = nodes => nodes
   .map(node => node.batches)
-  .map(batches => batches.filter(batch => parseInt(batch.selectedQuantity, 10)))
-  // .filter(batch => parseInt(batch.selectedQuantity, 10));
+  .map(batches => batches.filter(batch => parseInt(batch.selectedQuantity, 10)));
 
 const filterAvailableBatches = nodes => nodes
   .map(node => node)
@@ -95,6 +94,8 @@ const selectBatch = (state, { payload }) => {
 
   console.log(nodes, 'findSelectedQuantityBatches', findSelectedQuantityBatches(nodes))
 
+  newState.total = findSelectedQuantityBatches(nodes);
+
   return newState;
 };
 
@@ -121,6 +122,7 @@ const selectPaymentMethod = (state, { payload }) => {
   };
 
   newState.nodes = nodes;
+  newState.total = findSelectedQuantityBatches(nodes);
 
   return newState;
 };
