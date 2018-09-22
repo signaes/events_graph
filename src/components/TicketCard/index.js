@@ -38,7 +38,7 @@ const TicketCard = ({
                 })}>
                   { quantities(batch.purchaseable_quantities)
                     .map(n => (
-                      <option value={`${n}`} key={`${id}-q-${n}`}>{n}</option>
+                      <option value={n === '-' ? 0 : n} key={`${id}-q-${n}`}>{n}</option>
                     )) }
               </select>
             </div>)
@@ -54,7 +54,7 @@ const TicketCard = ({
                   { batch.payment_methods
                     .map(n => (
                       <option
-                        value={`${n.payment_type}`}
+                        value={n.payment_type}
                         key={`${id}-p-${n.payment_type}`}>
                         {paymentMethodName(n.payment_type)}
                       </option>
