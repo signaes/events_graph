@@ -7,6 +7,12 @@ const {
   SELECT_PAYMENT_METHOD,
 } = types;
 
+const initialState = {
+  nodes: [],
+  selected: {},
+  paymentMethods: {},
+};
+
 const filterAvailableBatches = nodes => nodes
   .map(node => node)
   .map(node => {
@@ -28,17 +34,20 @@ const filterAvailableBatches = nodes => nodes
     }
   );
 
-const initialState = {
-  nodes: [],
-  selected: {},
-  paymentMethods: {},
-};
-
 const addTicketOffers = (state, action) => {
-  console.log('addTicketOffers', action)
+  const nodes = filterAvailableBatches(action.payload.nodes);
+  const paymentMethods = nodes
+    .map(node => ({
+      [node.id]: {
+        batch: node.batches[0],
+        quantity: 0
+      }
+    }));
+
   return {
     ...state,
-    nodes: filterAvailableBatches(action.payload.nodes),
+    nodes,
+    paymentMethods,
   };
 };
 
