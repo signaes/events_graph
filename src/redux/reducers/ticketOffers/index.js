@@ -35,12 +35,19 @@ const filterAvailableBatches = nodes => nodes
   );
 
 const addTicketOffers = (state, action) => {
-  const nodes = filterAvailableBatches(action.payload.nodes);
+  const nodes = filterAvailableBatches(action.payload.nodes)
+    .map(node => ({
+      ...node,
+      batches: node.batches.map(b => ({
+        ...b,
+        chosenPaymentMethod: b.payment_methods[0]
+      }))
+    }));
   const paymentMethods = nodes
     .map(node => ({
       [node.id]: {
         batch: node.batches[0],
-        quantity: 0
+        paymentMethod: node.batches[0].payment_methods[0],
       }
     }));
 
@@ -66,11 +73,26 @@ const selectBatch = (state, { payload }) => {
 const selectPaymentMethod = (state, { payload }) => {
   let newState = { ...state };
   const { ticketId, batch, paymentMethod } = payload;
+  const nodes = state.nodes.map(node => ({
+    ...node,
+    batches: node.batches.map(b => ({
+      ...b,
+      chosenPaymentMethod: b.id === batch.id
+        ? b.payment_methods.filter(p => p.payment_type === paymentMethod)[0]
+        : b.chosenPaymentMethod
+    }))
+  }));
+
+  console.log('PAYMENT_METHOD_REDUCER', paymentMethod)
+  console.log('PAYMENT_METHOD_REDUCER', nodes)
+
 
   newState.paymentMethods = {
     ...state.paymentMethods,
-    [ticketId]: { batch, paymentMethod }
+    [ticketId]: { batch, paymentMethod },
   };
+
+  newState.nodes = nodes;
 
   return newState;
 };

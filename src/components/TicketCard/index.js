@@ -11,20 +11,23 @@ const paymentMethodName = m => m === 'BANK_SLIP'
     ? 'Cartão de Crédito'
     : null;
 
+const findTaxes = batch =>
+  `(+ ${parsePrice(batch.chosenPaymentMethod.due_service_fee)} em taxas)`;
+
 const TicketCard = ({
   batch,
   description,
   id,
   name,
   selectBatch,
-  selectPaymentMethod
+  selectPaymentMethod,
 }) => (
   <div className="ticket-card" data-available={batch.available}>
     <header className="ticket-card__header">
       <div className="ticket-card__header__content">
         <h2 className="ticket-card__title">{ name } - Lote { batch.number }</h2>
         <h3 className="ticket-card__price">
-          { parsePrice(batch.price) }
+          { parsePrice(batch.price) } { findTaxes(batch) }
         </h3>
       </div>
       <div className="ticket-card__header__control">
