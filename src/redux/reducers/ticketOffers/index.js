@@ -14,6 +14,11 @@ const initialState = {
   total: {}
 };
 
+const findSelectedQuantityBatches = nodes => nodes
+  .map(node => node.batches)
+  .map(batches => batches.filter(batch => parseInt(batch.selectedQuantity, 10)))
+  // .filter(batch => parseInt(batch.selectedQuantity, 10));
+
 const filterAvailableBatches = nodes => nodes
   .map(node => node)
   .map(node => {
@@ -42,7 +47,8 @@ const addTicketOffers = (state, action) => {
       batches: node.batches.map(b => ({
         ...b,
         chosenPaymentMethod: b.payment_methods[0],
-        priceByQuantity: b.price
+        priceByQuantity: b.price,
+        selectedQuantity: 0,
       }))
     }));
   const paymentMethods = nodes
@@ -63,13 +69,21 @@ const addTicketOffers = (state, action) => {
 const selectBatch = (state, { payload }) => {
   let newState = { ...state };
   const { ticketId, batch, quantity } = payload;
+  console.log('BATCH ID', batch.id)
   const nodes = state.nodes
     .map(node => ({
       ...node,
-      batches: node.batches.map(b => ({
-        ...b,
-        priceByQuantity: b.price * parseInt(quantity, 10)
-      }))
+      batches: node
+        .batches
+        .map(b => ({
+          ...b,
+          priceByQuantity: b.id === batch.id
+            ? b.price * parseInt(quantity, 10)
+            : b.priceByQuantity,
+          selectedQuantity: b.id === batch.id
+            ? quantity
+            : b.selectedQuantity,
+        }))
     }));
 
   newState.selected = {
@@ -78,6 +92,8 @@ const selectBatch = (state, { payload }) => {
   };
 
   newState.nodes = nodes;
+
+  console.log(nodes, 'findSelectedQuantityBatches', findSelectedQuantityBatches(nodes))
 
   return newState;
 };
