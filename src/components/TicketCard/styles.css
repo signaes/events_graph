@@ -1,0 +1,16 @@
+.ticket-card {
+  background-color: #F9F9F9;
+  border-radius: 5px; }
+  .ticket-card[data-available="false"] {
+    opacity: .5;
+    pointer-events: none; }
+  .ticket-card__header, .ticket-card__footer {
+    padding: 1em; }
+  .ticket-card__header {
+    display: flex; }
+    .ticket-card__header__content {
+      flex-grow: 1; }
+  .ticket-card__title {
+    font-size: 1em; }
+  .ticket-card__price {
+    font-size: 2em; }
